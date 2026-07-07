@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración — Bancos</title>
+    <link rel="icon" type="image/png" href="https://avatars.mds.yandex.net/get-entity_search/113983/603492168/S600xU_2x">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #1e293b;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* ===== LOGIN SCREEN ===== */
+        .login-screen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .login-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 32px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .login-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1a5f5c, #0d403e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+        }
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .login-subtitle {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+        .login-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+        }
+        .login-input:focus {
+            outline: none;
+            border-color: #1a5f5c;
+            box-shadow: 0 0 0 3px rgba(26, 95, 92, 0.1);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(90deg, #1a5f5c, #0d403e);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(26, 95, 92, 0.3);
+        }
+        .login-error {
+            color: #dc2626;
+            font-size: 0.85rem;
+            margin-top: 12px;
+            display: none;
+            padding: 10px;
+            background: #fee2e2;
+            border-radius: 12px;
+        }
+        .login-error.visible { display: block; }
+
+        /* ===== ADMIN PANEL ===== */
+        .admin-panel { display: none; }
+        .admin-panel.active { display: block; }
+
+        .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .admin-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .admin-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #1a5f5c, #0d403e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .admin-header-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .admin-header-subtitle {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 24px;
+            background: white;
+            padding: 6px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            overflow-x: auto;
+        }
+        .nav-tab {
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: none;
+            background: transparent;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .nav-tab:hover { background: #f1f5f9; color: #334155; }
+        .nav-tab.active { background: #1a5f5c; color: white; }
+
+        /* Sections */
+        .section { display: none; }
+        .section.active { display: block; }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        .card-subtitle {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        /* Bank Cards */
+        .bank-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .bank-item {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.2s;
+        }
+        .bank-item:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .bank-item-logo {
+            width: 56px;
+            height: 56px;
+            background: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            flex-shrink: 0;
+        }
+        .bank-item-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .bank-item-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .bank-item-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #0f172a;
+            margin-bottom: 2px;
+        }
+        .bank-item-meta {
+            font-size: 0.8rem;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .bank-item-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+        .bank-item-status.enabled {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .bank-item-status.disabled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .bank-item-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 8px 16px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn:hover { transform: translateY(-1px); }
+        .btn-primary {
+            background: linear-gradient(90deg, #1a5f5c, #0d403e);
+            color: white;
+        }
+        .btn-primary:hover { box-shadow: 0 4px 12px rgba(26, 95, 92, 0.3); }
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #334155;
+        }
+        .btn-secondary:hover { background: #e2e8f0; }
+        .btn-danger {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .btn-danger:hover { background: #fecaca; }
+        .btn-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .btn-success:hover { background: #a7f3d0; }
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: 10px;
+            justify-content: center;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            border-radius: 24px;
+            transition: 0.3s;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: #1a5f5c;
+        }
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 28px;
+            animation: modalSlideIn 0.3s ease;
+        }
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: #f1f5f9;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close:hover { background: #e2e8f0; }
+
+        /* Form Fields */
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #1a5f5c;
+            box-shadow: 0 0 0 3px rgba(26, 95, 92, 0.1);
+        }
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 8px;
+            padding-top: 16px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        .alert.visible { display: flex; }
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 48px 20px;
+            color: #64748b;
+        }
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+        .empty-state-title {
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 4px;
+        }
+
+        /* Password change */
+        .password-form {
+            max-width: 400px;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            body { padding: 12px; }
+            .form-row { grid-template-columns: 1fr; }
+            .bank-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .bank-item-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            .admin-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .save-indicator {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: #fef3c7;
+            color: #92400e;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .save-indicator.visible { display: flex; }
+        .save-indicator.saving { background: #dbeafe; color: #1e40af; }
+        .save-indicator.saved { background: #d1fae5; color: #065f46; }
+    </style>
+</head>
+<body>
+
+<!-- ========== LOGIN SCREEN ========== -->
+<div class="login-screen" id="loginScreen">
+    <div class="login-card">
+        <div class="login-icon">🔐</div>
+        <div class="login-title">Panel de Administración</div>
+        <div class="login-subtitle">Ingresa la contraseña para gestionar los datos bancarios</div>
+        <input type="password" class="login-input" id="passwordInput" placeholder="Contraseña de administrador" onkeydown="if(event.key==='Enter')doLogin()">
+        <button class="login-btn" onclick="doLogin()">Ingresar</button>
+        <div class="login-error" id="loginError">❌ Contraseña incorrecta</div>
+        <p style="margin-top: 16px; font-size: 0.75rem; color: #94a3b8;">
+            Contraseña por defecto: <strong>admin123</strong><br>
+            (cámbiala en la sección "Seguridad")
+        </p>
+    </div>
+</div>
+
+<!-- ========== ADMIN PANEL ========== -->
+<div class="admin-panel" id="adminPanel">
+    <div class="container">
+
+        <!-- Header -->
+        <div class="admin-header">
+            <div class="admin-header-left">
+                <div class="admin-logo">⚙️</div>
+                <div>
+                    <div class="admin-header-title">Panel de Administración</div>
+                    <div class="admin-header-subtitle">Gestión de datos bancarios y contenido</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="previewSite()">👁️ Ver sitio</button>
+                <button class="btn btn-danger" onclick="logout()">🚪 Cerrar sesión</button>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('banks')">🏦 Bancos</button>
+            <button class="nav-tab" onclick="switchTab('content')">📝 Contenido</button>
+            <button class="nav-tab" onclick="switchTab('security')">🔒 Seguridad</button>
+        </div>
+
+        <!-- Save Indicator -->
+        <div class="save-indicator" id="saveIndicator">
+            <span id="saveIndicatorText">⚠️ Hay cambios sin guardar</span>
+        </div>
+
+        <!-- Alert Messages -->
+        <div class="alert alert-success" id="alertSuccess"></div>
+        <div class="alert alert-error" id="alertError"></div>
+
+        <!-- ===== BANKS SECTION ===== -->
+        <div class="section active" id="banksSection">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                    <div>
+                        <div class="card-title">Bancos configurados</div>
+                        <div class="card-subtitle">Gestiona los bancos disponibles para transferencias</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="openAddBankModal()">➕ Agregar banco</button>
+                </div>
+                <div class="bank-list" id="banksList"></div>
+            </div>
+        </div>
+
+        <!-- ===== CONTENT SECTION ===== -->
+        <div class="section" id="contentSection">
+            <div class="card">
+                <div class="card-title">Configuración de la página</div>
+                <div class="card-subtitle">Edita los textos y enlaces que aparecen en la página principal</div>
+
+                <div class="form-group">
+                    <label class="form-label">Título del país</label>
+                    <input type="text" class="form-input" id="cfgCountryTitle">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Ministerio</label>
+                    <input type="text" class="form-input" id="cfgMinistry">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Título de la página</label>
+                    <input type="text" class="form-input" id="cfgPageTitle">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nombre del servicio</label>
+                    <input type="text" class="form-input" id="cfgServiceName">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tipo de servicio</label>
+                    <input type="text" class="form-input" id="cfgServiceType">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Enlace de Telegram</label>
+                    <input type="text" class="form-input" id="cfgTelegram">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Texto de alerta (admite HTML)</label>
+                    <textarea class="form-textarea" id="cfgAlertText"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mostrar alerta</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="cfgAlertEnabled">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" onclick="saveContentConfig()">💾 Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SECURITY SECTION ===== -->
+        <div class="section" id="securitySection">
+            <div class="card password-form">
+                <div class="card-title">Cambiar contraseña</div>
+                <div class="card-subtitle">Actualiza la contraseña de acceso al panel</div>
+
+                <div class="form-group">
+                    <label class="form-label">Contraseña actual</label>
+                    <input type="password" class="form-input" id="oldPassword">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nueva contraseña</label>
+                    <input type="password" class="form-input" id="newPassword">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Confirmar nueva contraseña</label>
+                    <input type="password" class="form-input" id="confirmPassword">
+                </div>
+                <button class="btn btn-primary" onclick="changePassword()">🔐 Cambiar contraseña</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ========== ADD/EDIT BANK MODAL ========== -->
+<div class="modal-overlay" id="bankModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title" id="bankModalTitle">Agregar banco</div>
+            <button class="modal-close" onclick="closeBankModal()">✕</button>
+        </div>
+
+        <input type="hidden" id="editBankId">
+
+        <div class="form-group">
+            <label class="form-label">Nombre del banco *</label>
+            <input type="text" class="form-input" id="bankName" placeholder="Ej: Banco Pichincha">
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Tipo de cuenta *</label>
+                <select class="form-select" id="bankAccountType">
+                    <option value="Cuenta de Ahorros">Cuenta de Ahorros</option>
+                    <option value="Cuenta Corriente">Cuenta Corriente</option>
+                    <option value="Cuenta de Ahorros Premium">Cuenta de Ahorros Premium</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Número de cuenta *</label>
+                <input type="text" class="form-input" id="bankAccountNumber" placeholder="Ej: 2201234567">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Cédula / CI *</label>
+                <input type="text" class="form-input" id="bankCedula" placeholder="Ej: 1723456789">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Nombre del titular *</label>
+                <input type="text" class="form-input" id="bankFullName" placeholder="Ej: Juan Pérez">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">URL del logo</label>
+            <input type="text" class="form-input" id="bankLogo" placeholder="https://ejemplo.com/logo.png">
+            <small style="color: #94a3b8; font-size: 0.75rem;">Deje vacío para usar el logo por defecto</small>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Banco activo</label>
+            <label class="toggle-switch">
+                <input type="checkbox" id="bankEnabled" checked>
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-secondary" onclick="closeBankModal()">Cancelar</button>
+            <button class="btn btn-primary" onclick="saveBank()">💾 Guardar banco</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== CONFIG =====
+const API_URL = 'get_config_ec.php';
+const SAVE_URL = 'save_config_ec.php';
+const DEFAULT_PASSWORD = 'admin123';
+
+// ===== STATE =====
+let config = {};
+let hasChanges = false;
+
+// ===== LOGIN =====
+function doLogin() {
+    const input = document.getElementById('passwordInput').value.trim();
+    const savedPassword = localStorage.getItem('admin_password') || DEFAULT_PASSWORD;
+
+    if (input === savedPassword) {
+        sessionStorage.setItem('admin_logged_in', 'true');
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('adminPanel').classList.add('active');
+        loadConfig();
+    } else {
+        document.getElementById('loginError').classList.add('visible');
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('passwordInput').focus();
+    }
+}
+
+function logout() {
+    sessionStorage.removeItem('admin_logged_in');
+    location.reload();
+}
+
+function checkLogin() {
+    if (sessionStorage.getItem('admin_logged_in') === 'true') {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('adminPanel').classList.add('active');
+        loadConfig();
+    }
+}
+
+// ===== TABS =====
+function switchTab(tab) {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+
+    event.target.classList.add('active');
+    document.getElementById(tab + 'Section').classList.add('active');
+}
+
+// ===== LOAD CONFIG =====
+function loadConfig() {
+    fetch(API_URL + '?_=' + Date.now())
+        .then(r => r.json())
+        .then(data => {
+            config = data;
+            renderBanksList();
+            fillContentForm();
+            hideAlerts();
+        })
+        .catch(err => {
+            showAlert('error', 'Error al cargar la configuración: ' + err.message);
+        });
+}
+
+// ===== BANKS CRUD =====
+function renderBanksList() {
+    const container = document.getElementById('banksList');
+    const banks = config.banks || {};
+    const entries = Object.entries(banks);
+
+    if (entries.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">🏦</div>
+                <div class="empty-state-title">No hay bancos configurados</div>
+                <p>Agrega tu primer banco para comenzar</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = entries.map(([id, bank]) => `
+        <div class="bank-item">
+            <div class="bank-item-logo">
+                <img src="${bank.logo || 'https://cdn-icons-png.flaticon.com/512/2830/2830284.png'}" 
+                     onerror="this.src='https://cdn-icons-png.flaticon.com/512/2830/2830284.png'" 
+                     alt="${escapeHtml(bank.name)}">
+            </div>
+            <div class="bank-item-info">
+                <div class="bank-item-name">${escapeHtml(bank.name)}</div>
+                <div class="bank-item-meta">
+                    ${escapeHtml(bank.account_type)} • ${escapeHtml(bank.account_number)} • ${escapeHtml(bank.full_name)}
+                </div>
+                <div class="bank-item-status ${bank.enabled !== false ? 'enabled' : 'disabled'}">
+                    ${bank.enabled !== false ? '🟢 Activo' : '🔴 Inactivo'}
+                </div>
+            </div>
+            <div class="bank-item-actions">
+                <label class="toggle-switch" title="Activar/Desactivar">
+                    <input type="checkbox" ${bank.enabled !== false ? 'checked' : ''} onchange="toggleBank('${id}', this.checked)">
+                    <span class="toggle-slider"></span>
+                </label>
+                <button class="btn btn-secondary btn-icon" onclick="editBank('${id}')" title="Editar">✏️</button>
+                <button class="btn btn-danger btn-icon" onclick="deleteBank('${id}')" title="Eliminar">🗑️</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function openAddBankModal() {
+    document.getElementById('bankModalTitle').textContent = 'Agregar banco';
+    document.getElementById('editBankId').value = '';
+    document.getElementById('bankName').value = '';
+    document.getElementById('bankAccountType').value = 'Cuenta de Ahorros';
+    document.getElementById('bankAccountNumber').value = '';
+    document.getElementById('bankCedula').value = '';
+    document.getElementById('bankFullName').value = '';
+    document.getElementById('bankLogo').value = '';
+    document.getElementById('bankEnabled').checked = true;
+    document.getElementById('bankModal').classList.add('active');
+}
+
+function editBank(id) {
+    const bank = config.banks[id];
+    if (!bank) return;
+
+    document.getElementById('bankModalTitle').textContent = 'Editar banco';
+    document.getElementById('editBankId').value = id;
+    document.getElementById('bankName').value = bank.name || '';
+    document.getElementById('bankAccountType').value = bank.account_type || 'Cuenta de Ahorros';
+    document.getElementById('bankAccountNumber').value = bank.account_number || '';
+    document.getElementById('bankCedula').value = bank.cedula || '';
+    document.getElementById('bankFullName').value = bank.full_name || '';
+    document.getElementById('bankLogo').value = bank.logo || '';
+    document.getElementById('bankEnabled').checked = bank.enabled !== false;
+    document.getElementById('bankModal').classList.add('active');
+}
+
+function closeBankModal() {
+    document.getElementById('bankModal').classList.remove('active');
+}
+
+function saveBank() {
+    const id = document.getElementById('editBankId').value;
+    const name = document.getElementById('bankName').value.trim();
+    const accountType = document.getElementById('bankAccountType').value;
+    const accountNumber = document.getElementById('bankAccountNumber').value.trim();
+    const cedula = document.getElementById('bankCedula').value.trim();
+    const fullName = document.getElementById('bankFullName').value.trim();
+    const logo = document.getElementById('bankLogo').value.trim();
+    const enabled = document.getElementById('bankEnabled').checked;
+
+    if (!name || !accountNumber || !cedula || !fullName) {
+        showAlert('error', 'Por favor completa todos los campos obligatorios (*).');
+        return;
+    }
+
+    const bankData = {
+        name, account_type: accountType, account_number: accountNumber,
+        cedula, full_name: fullName, logo, enabled
+    };
+
+    if (id) {
+        // Edit existing
+        config.banks[id] = bankData;
+    } else {
+        // Add new — generate ID from name
+        const newId = name.toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 30);
+        // Ensure unique
+        let uniqueId = newId;
+        let counter = 1;
+        while (config.banks[uniqueId]) {
+            uniqueId = newId + '_' + counter;
+            counter++;
+        }
+        config.banks[uniqueId] = bankData;
+    }
+
+    saveToServer();
+    closeBankModal();
+}
+
+function toggleBank(id, enabled) {
+    if (config.banks[id]) {
+        config.banks[id].enabled = enabled;
+        saveToServer();
+    }
+}
+
+function deleteBank(id) {
+    const bank = config.banks[id];
+    if (!bank) return;
+    if (!confirm(`¿Estás seguro de eliminar el banco "${bank.name}"?\n\nEsta acción no se puede deshacer.`)) return;
+
+    delete config.banks[id];
+    saveToServer();
+}
+
+// ===== CONTENT SECTION =====
+function fillContentForm() {
+    if (!config.page) return;
+    document.getElementById('cfgCountryTitle').value = config.page.country_title || '';
+    document.getElementById('cfgMinistry').value = config.page.ministry || '';
+    document.getElementById('cfgPageTitle').value = config.page.title || '';
+    document.getElementById('cfgServiceName').value = config.page.service_name || '';
+    document.getElementById('cfgServiceType').value = config.page.service_type || '';
+    document.getElementById('cfgTelegram').value = config.telegram || '';
+    document.getElementById('cfgAlertText').value = config.alert?.text || '';
+    document.getElementById('cfgAlertEnabled').checked = config.alert?.enabled !== false;
+}
+
+function saveContentConfig() {
+    if (!config.page) config.page = {};
+    if (!config.alert) config.alert = {};
+
+    config.page.country_title = document.getElementById('cfgCountryTitle').value.trim();
+    config.page.ministry = document.getElementById('cfgMinistry').value.trim();
+    config.page.title = document.getElementById('cfgPageTitle').value.trim();
+    config.page.service_name = document.getElementById('cfgServiceName').value.trim();
+    config.page.service_type = document.getElementById('cfgServiceType').value.trim();
+    config.telegram = document.getElementById('cfgTelegram').value.trim();
+    config.alert.text = document.getElementById('cfgAlertText').value.trim();
+    config.alert.enabled = document.getElementById('cfgAlertEnabled').checked;
+
+    saveToServer();
+}
+
+// ===== SECURITY =====
+function changePassword() {
+    const oldPass = document.getElementById('oldPassword').value;
+    const newPass = document.getElementById('newPassword').value;
+    const confirmPass = document.getElementById('confirmPassword').value;
+    const currentSaved = localStorage.getItem('admin_password') || DEFAULT_PASSWORD;
+
+    if (oldPass !== currentSaved) {
+        showAlert('error', 'La contraseña actual es incorrecta.');
+        return;
+    }
+    if (newPass.length < 4) {
+        showAlert('error', 'La nueva contraseña debe tener al menos 4 caracteres.');
+        return;
+    }
+    if (newPass !== confirmPass) {
+        showAlert('error', 'Las contraseñas nuevas no coinciden.');
+        return;
+    }
+
+    localStorage.setItem('admin_password', newPass);
+    document.getElementById('oldPassword').value = '';
+    document.getElementById('newPassword').value = '';
+    document.getElementById('confirmPassword').value = '';
+    showAlert('success', '✅ Contraseña actualizada correctamente.');
+}
+
+// ===== SAVE TO SERVER =====
+function saveToServer() {
+    const password = localStorage.getItem('admin_password') || DEFAULT_PASSWORD;
+
+    showSaveIndicator('saving', '💾 Guardando cambios...');
+    hideAlerts();
+
+    fetch(SAVE_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Admin-Password': password
+        },
+        body: JSON.stringify(config)
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            showSaveIndicator('saved', '✅ Cambios guardados correctamente');
+            renderBanksList();
+            setTimeout(() => hideSaveIndicator(), 3000);
+        } else {
+            showSaveIndicator('error', '❌ Error: ' + (data.error || 'No se pudo guardar'));
+        }
+    })
+    .catch(err => {
+        showSaveIndicator('error', '❌ Error de conexión: ' + err.message);
+    });
+}
+
+// ===== UI HELPERS =====
+function showAlert(type, message) {
+    hideAlerts();
+    const alert = document.getElementById('alert' + type.charAt(0).toUpperCase() + type.slice(1));
+    alert.textContent = message;
+    alert.classList.add('visible');
+    setTimeout(() => alert.classList.remove('visible'), 5000);
+}
+
+function hideAlerts() {
+    document.querySelectorAll('.alert').forEach(a => a.classList.remove('visible'));
+}
+
+function showSaveIndicator(state, text) {
+    const indicator = document.getElementById('saveIndicator');
+    const textEl = document.getElementById('saveIndicatorText');
+    indicator.className = 'save-indicator visible ' + state;
+    textEl.textContent = text;
+}
+
+function hideSaveIndicator() {
+    document.getElementById('saveIndicator').classList.remove('visible');
+}
+
+function previewSite() {
+    window.open('index.html', '_blank');
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', checkLogin);
+</script>
+
+</body>
+</html>

