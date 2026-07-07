@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 // Проверка пароля администратора
-$adminPassword = 'admin123'; // Измените на свой надёжный пароль!
+$adminPassword = 'DipDip1029'; // Измените на свой надёжный пароль!
 $headers = getallheaders();
 $providedPassword = isset($headers['X-Admin-Password']) ? $headers['X-Admin-Password'] : '';
 
