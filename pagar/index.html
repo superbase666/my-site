@@ -561,7 +561,11 @@
 
         <p class="desc" id="pageDesc">Pago único por los servicios de <strong>Maria Romero</strong> — gestión: <strong>«ACREDITACIÓN DE CRÉDITO APROBADO»</strong>.</p>
 
-
+        <div class="alert-warning" id="alertWarning">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-text" id="alertText"><strong>Importante:</strong> Realiza el pago únicamente mediante transferencia bancaria (SPI / Banco Pichincha / Banco Guayaquil).<br>No escribas comentarios en la transferencia.</div>
+            <button class="alert-close" onclick="this.closest('.alert-warning').remove()">✕</button>
+        </div>
 
         <div class="banks-grid" id="banksGrid"></div>
         <div id="bankDetailsPanel" style="display: none;"></div>
