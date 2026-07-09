@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banco Central Del Ecuador</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
+
+<style>*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:#fff;
+  color:#000;
+  line-height:1.45
+}
+
+img{max-width:100%;height:auto;display:block}
+
+/* ===== NEW HEADER ===== */
+.header{
+  background:#242f5d;
+  min-height:82px;
+  display:flex;
+  align-items:center;
+}
+
+.nav{
+  width:1200px;
+  max-width:100%;
+  margin:0 auto;
+  padding:0 16px;
+  display:flex;
+  align-items:center;
+  gap:30px;
+}
+
+.home{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:60px;
+  text-decoration:none;
+  flex:0 0 auto;
+}
+
+.home img{
+  width:38px;
+}
+
+.menu{
+  flex:1;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.menu-item{
+  width:160px;
+  text-align:center;
+  color:#fff;
+  font-size:15px;
+  font-weight:500;
+  line-height:1.15;
+  white-space:nowrap;
+}
+
+.menu-item img{
+  width:16px;
+  margin:6px auto 0;
+}
+
+/* ===== CONTENT ===== */
+.center{
+  max-width:1200px;
+  margin:0 auto;
+  padding:80px 16px 40px;
+  text-align:center
+}
+
+.notice{
+  display:inline-block;
+  background:#27345f;
+  color:#fff;
+  border-radius:22px;
+  padding:36px 44px;
+  font-size:20px;
+  font-weight:500;
+  max-width:720px;
+  margin-bottom:36px
+}
+
+.logos{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:36px;
+  margin:10px 0 60px;
+  flex-wrap:wrap;
+}
+
+.logos img{
+  height:120px;
+  width:auto;
+}
+
+.divider{
+  width:2px;
+  height:130px;
+  background:#000
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  background:#d6d6d6;
+  padding:22px 10px;
+  text-align:center;
+  font-size:16px;
+  font-weight:900;
+  color:#242f5d
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .menu{
+    justify-content:center;
+    gap:14px 20px;
+  }
+  .menu-item{
+    width:auto;
+    font-size:13px;
+  }
+  .center{
+    padding:60px 16px 30px
+  }
+  .notice{
+    font-size:18px;
+    padding:28px 22px
+  }
+  .logos img{
+    height:90px
+  }
+  .divider{
+    height:100px
+  }
+
+}
+@media (max-width: 768px){
+  .header{
+    height:auto;
+    padding:10px 0;
+  }
+
+  .nav{
+    align-items:center;
+    gap:12px;
+  }
+
+  .home{
+    width:44px;
+    height:44px;
+    padding:0;
+  }
+
+  .home img{
+    width:32px;
+  }
+
+  .menu{
+    flex-wrap:nowrap !important;
+    justify-content:flex-start !important;
+    gap:18px !important;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding:6px 4px;
+  }
+
+  .menu::-webkit-scrollbar{
+    display:none;
+  }
+
+  .menu-item{
+    width:auto !important;
+    min-width:auto !important;
+    flex:0 0 auto;
+    font-size:13px;
+    line-height:1.15;
+    white-space:nowrap;
+  }
+
+  .menu-item img{
+    width:14px;
+    margin-top:4px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="nav">
+
+    <a class="home" href="#">
+      <img src="dom.png" alt="Inicio">
+    </a>
+
+    <div class="menu">
+      <div class="menu-item">
+        RENDICIÓN DE<br>CUENTAS 2024
+        <img src="arrow.png" alt="">
+      </div>
+
+      <div class="menu-item">
+        COMPROBANTES<br>ELECTRÓNICOS
+        <img src="arrow.png" alt="">
+      </div>
+
+      <div class="menu-item">
+        OPORTUNIDADES<br>LABORALES
+        <img src="arrow.png" alt="">
+      </div>
+
+      <div class="menu-item">
+        TRANSPARENCIA
+        <img src="arrow.png" alt="">
+      </div>
+
+      <div class="menu-item">
+        ENGLISH VERSION
+        <img src="arrow.png" alt="">
+      </div>
+
+      <div class="menu-item">
+        CORREO ELECTRÓNICO
+        <img src="arrow.png" alt="">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="center">
+  <div class="notice">
+    Escriba a su asesor de crédito para que<br>
+     le proporcione los detalles para el pago
+  </div>
+
+  <div class="logos">
+    <img src="banco.png" alt="Logo 1">
+    <div class="divider"></div>
+    <img src="yanko.png" alt="Logo 2">
+  </div>
+</div>
+
+
+</body>
+</html>

