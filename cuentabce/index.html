@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Banco Central Del Ecuador</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+
+  <style>* { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: #ffffff;
+      color: #000;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: #1e2750;
+      height: 82px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav {
+      width: 1200px;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .home {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 82px;
+      text-decoration: none;
+      flex: 0 0 auto;
+    }
+
+    .home svg { width: 38px; height: 38px; }
+
+    .menu {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      min-width: 0;
+    }
+
+    .menu-item {
+      text-align: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.2;
+      white-space: nowrap;
+      flex: 0 0 auto;
+      cursor: pointer;
+    }
+
+    .menu-item svg.chevron {
+      width: 16px;
+      height: 10px;
+      margin: 6px auto 0;
+      display: block;
+    }
+
+    /* ===== TITLE BLOCK ===== */
+    .title {
+      width: 960px;
+      max-width: calc(100% - 32px);
+      height: 71px;
+      background: #d6d6d6;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      padding: 0 24px;
+      font-size: 29px;
+      font-weight: 900;
+    }
+
+    /* ===== CONTENT ===== */
+    .container {
+      width: 937px;
+      max-width: calc(100% - 32px);
+      margin: 40px auto 0;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .container p { margin-bottom: 22px; }
+
+    /* ===== PAY BUTTON ===== */
+    .pay-wrap {
+      width: 276px;
+      max-width: calc(100% - 32px);
+      margin: 80px auto 40px;
+    }
+
+    .pay-btn {
+      width: 100%;
+      height: 61px;
+      background: #d6d6d6;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      font-weight: 800;
+      color: #171717;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #1a1f3d;
+      width: 100%;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    /* Footer left: emblem + logo */
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-shrink: 0;
+    }
+
+    .emblem {
+      width: 90px;
+      height: 90px;
+      flex-shrink: 0;
+    }
+
+    .footer-logo-text {
+      color: #fff;
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-logo-text span {
+      display: block;
+    }
+
+    /* Social icons */
+    .socials {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .socials a {
+      width: 34px;
+      height: 34px;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: border-color 0.2s;
+    }
+
+    .socials a:hover { border-color: #fff; }
+
+    .socials svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+    }
+
+    /* Footer columns */
+    .footer-columns {
+      display: flex;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+
+    .footer-col {
+      color: #fff;
+    }
+
+    .footer-col-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+    }
+
+    .footer-col p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.85);
+      font-weight: 400;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .header { height: auto; padding: 10px 0; }
+      .home { height: auto; width: auto; padding: 8px; }
+      .menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 18px 24px;
+      }
+      .menu-item { font-size: 13px; }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 30px;
+      }
+      .footer-columns { gap: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      .header { height: auto; padding: 10px 0; }
+      .nav { align-items: center; gap: 12px; }
+      .home { width: 44px; height: 44px; padding: 0; }
+      .home svg { width: 32px; height: 32px; }
+
+      .menu {
+        flex-wrap: nowrap !important;
+        justify-content: flex-start !important;
+        gap: 18px !important;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 6px 4px;
+      }
+      .menu::-webkit-scrollbar { display: none; }
+      .menu-item {
+        flex: 0 0 auto;
+        font-size: 12px;
+        line-height: 1.15;
+        white-space: nowrap;
+      }
+      .menu-item svg.chevron {
+        width: 14px;
+        height: 9px;
+        margin-top: 4px;
+      }
+
+      .title { height: auto; padding: 16px; font-size: 20px; }
+      .container { margin-top: 22px; font-size: 16px; line-height: 1.35; }
+      .container p { margin-bottom: 14px; }
+      .pay-wrap { margin: 40px auto 20px; }
+      .pay-btn { height: 54px; font-size: 22px; }
+
+      .footer-columns { flex-direction: column; gap: 24px; }
+    }
+
+    @media (max-width: 600px) {
+      .nav { gap: 14px; }
+      .menu { gap: 14px 18px; }
+      .menu-item { font-size: 11px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="nav">
+
+      <a class="home" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9.5L12 3l9 6.5"/>
+          <path d="M5 10.5V20h5v-5.5h4V20h5v-9.5"/>
+        </svg>
+      </a>
+
+      <div class="menu">
+        <div class="menu-item">
+          RENDICIÓN DE<br>CUENTAS 2024
+          <svg class="chevron" viewBox="0 0 16 10" fill="none">
+            <path d="M1.5 1.5L8 8L14.5 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="menu-item">
+          COMPROBANTES<br>ELECTRÓNICOS
+          <svg class="chevron" viewBox="0 0 16 10" fill="none">
+            <path d="M1.5 1.5L8 8L14.5 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="menu-item">
+          OPORTUNIDADES<br>LABORALES
+          <svg class="chevron" viewBox="0 0 16 10" fill="none">
+            <path d="M1.5 1.5L8 8L14.5 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="menu-item">
+          TRANSPARENCIA
+          <svg class="chevron" viewBox="0 0 16 10" fill="none">
+            <path d="M1.5 1.5L8 8L14.5 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="menu-item">
+          ENGLISH VERSION
+          <svg class="chevron" viewBox="0 0 16 10" fill="none">
+            <path d="M1.5 1.5L8 8L14.5 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="menu-item">
+          CORREO ELECTRÓNICO
+          <svg class="chevron" viewBox="0 0 16 10" fill="none">
+            <path d="M1.5 1.5L8 8L14.5 1.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TITLE -->
+  <div class="title">
+    Apertura de la cuenta de crédito
+  </div>
+
+  <!-- CONTENT -->
+  <div class="container">
+    <p>Para recibir su crédito deberá abrir una cuenta de crédito independiente. Este es un trámite bancario estándar que garantiza el depósito seguro de los fondos, la protección de sus datos y la configuración de su calendario de pagos personalizado.</p>
+
+    <p><strong>Procedimiento de apertura</strong></p>
+
+    <p>La apertura de la cuenta incluye:</p>
+
+    <p>* activación de la cuenta de crédito;</p>
+    <p>* verificación final de sus datos;</p>
+    <p>* configuración de la seguridad de los fondos y del acceso;</p>
+    <p>* establecimiento del calendario de pagos del crédito.</p>
+
+    <p><strong>Costo</strong></p>
+
+    <p>Por la apertura y mantenimiento técnico de la cuenta de crédito se cobra una comisión de <strong>85 dólares</strong>. Este valor cubre los gastos operativos del banco por el procesamiento de la solicitud, la formalización legal y el soporte técnico de la cuenta.</p>
+
+    <p><strong>Depósito del crédito</strong></p>
+
+    <p>Inmediatamente después de realizar el pago de la comisión y completar el trámite de apertura de la cuenta, el monto aprobado de su crédito será depositado en su nueva cuenta.</p>
+
+    <p>Los datos para realizar el pago serán emitidos automáticamente por el empleado de nuestro banco después de hacer clic en el botón "PAGAR".</p>
+
+    <p>Todas las transacciones se registran en nuestro sistema, así como en el impuesto, lo que garantiza la seguridad total de sus fondos y todo el proceso.</p>
+
+    <p>Si tiene alguna pregunta, puede preguntarle a su gerente personal</p>
+  </div>
+
+
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-inner">
+
+      <!-- Left: Emblem + Logo + Socials -->
+      <div>
+        <div class="footer-left">
+          <!-- Stylized Emblem SVG -->
+          <svg class="emblem" viewBox="0 0 100 100" fill="none">
+            <!-- Outer rays -->
+            <g stroke="#c4a55a" stroke-width="1.2" opacity="0.9">
+              <line x1="50" y1="5" x2="50" y2="18"/>
+              <line x1="50" y1="82" x2="50" y2="95"/>
+              <line x1="5" y1="50" x2="18" y2="50"/>
+              <line x1="82" y1="50" x2="95" y2="50"/>
+              <line x1="18" y1="18" x2="27" y2="27"/>
+              <line x1="73" y1="73" x2="82" y2="82"/>
+              <line x1="18" y1="82" x2="27" y2="73"/>
+              <line x1="73" y1="27" x2="82" y2="18"/>
+              <line x1="32" y1="9" x2="38" y2="20"/>
+              <line x1="62" y1="80" x2="68" y2="91"/>
+              <line x1="9" y1="32" x2="20" y2="38"/>
+              <line x1="80" y1="62" x2="91" y2="68"/>
+              <line x1="9" y1="68" x2="20" y2="62"/>
+              <line x1="80" y1="38" x2="91" y2="32"/>
+              <line x1="32" y1="91" x2="38" y2="80"/>
+              <line x1="62" y1="20" x2="68" y2="9"/>
+            </g>
+            <!-- Inner decorative circle -->
+            <circle cx="50" cy="50" r="22" stroke="#c4a55a" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <circle cx="50" cy="50" r="16" stroke="#c4a55a" stroke-width="1" fill="none" opacity="0.4"/>
+            <!-- Center golden shape -->
+            <circle cx="50" cy="50" r="8" fill="#c4a55a" opacity="0.9"/>
+            <circle cx="50" cy="50" r="4" fill="#e8d5a3"/>
+            <!-- Zigzag rays -->
+            <path d="M50 22 Q52 28 50 34 Q48 40 50 46" stroke="#c4a55a" stroke-width="1" fill="none" opacity="0.7"/>
+            <path d="M50 78 Q52 72 50 66 Q48 60 50 54" stroke="#c4a55a" stroke-width="1" fill="none" opacity="0.7"/>
+            <path d="M22 50 Q28 52 34 50 Q40 48 46 50" stroke="#c4a55a" stroke-width="1" fill="none" opacity="0.7"/>
+            <path d="M78 50 Q72 52 66 50 Q60 48 54 50" stroke="#c4a55a" stroke-width="1" fill="none" opacity="0.7"/>
+          </svg>
+
+          <div class="footer-logo-text">
+            <span>BANCO</span>
+            <span>CENTRAL DEL</span>
+            <span>ECUADOR</span>
+          </div>
+        </div>
+
+        <!-- Social Icons -->
+        <div class="socials">
+          <!-- Instagram -->
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24">
+              <rect x="2" y="2" width="20" height="20" rx="5.5" ry="5.5" stroke="#fff" stroke-width="1.8" fill="none"/>
+              <circle cx="12" cy="12" r="4.5" stroke="#fff" stroke-width="1.8" fill="none"/>
+              <circle cx="17.2" cy="6.8" r="1.2" fill="#fff"/>
+            </svg>
+          </a>
+          <!-- Flickr -->
+          <a href="#" aria-label="Flickr">
+            <svg viewBox="0 0 24 24">
+              <circle cx="8" cy="12" r="4" fill="#fff"/>
+              <circle cx="16" cy="12" r="4" fill="#fff"/>
+            </svg>
+          </a>
+          <!-- Facebook -->
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+          </a>
+          <!-- YouTube -->
+          <a href="#" aria-label="YouTube">
+            <svg viewBox="0 0 24 24">
+              <path d="M22.5 6.4a2.8 2.8 0 0 0-2-2C18.9 4 12 4 12 4s-6.9 0-8.5.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 1 12a29 29 0 0 0 .5 5.6 2.8 2.8 0 0 0 2 2C5.1 20 12 20 12 20s6.9 0 8.5-.4a2.8 2.8 0 0 0 2-2A29 29 0 0 0 23 12a29 29 0 0 0-.5-5.6z"/>
+              <polygon points="9.5,15.5 16,12 9.5,8.5" fill="#1a1f3d"/>
+            </svg>
+          </a>
+          <!-- X (Twitter) -->
+          <a href="#" aria-label="X">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 4l6.5 8.8L4 20h2.6l5.4-7.4L17 20H20l-6.8-9.2L19.4 4H17l-5 6.8L7.5 4H4z"/>
+            </svg>
+          </a>
+          <!-- LinkedIn -->
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24">
+              <rect x="2" y="2" width="20" height="20" rx="3" ry="3" stroke="#fff" stroke-width="1.6" fill="none"/>
+              <line x1="7" y1="9.5" x2="7" y2="17.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+              <circle cx="7" cy="6.5" r="1.3" fill="#fff"/>
+              <path d="M10.5 17.5v-4.2c0-.8.2-1.5.8-2 .5-.4 1.2-.5 1.8-.4.7.1 1.4.6 1.4 2.1v4.5" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            </svg>
+          </a>
+          <!-- TikTok -->
+          <a href="#" aria-label="TikTok">
+            <svg viewBox="0 0 24 24">
+              <path d="M19.5 3.5v3.8a5.5 5.5 0 0 1-3.3-1.1v7.6a6.5 6.5 0 1 1-6.5-6.5c.3 0 .6 0 .9.1v3.6a3 3 0 1 0 2.6 2.9V3.5h3.8a5.5 5.5 0 0 0 2.5-.5z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer columns -->
+      <div class="footer-columns">
+        <div class="footer-col">
+          <div class="footer-col-title">MATRIZ QUITO:</div>
+          <p>Av. 10 de Agosto N11-409<br>y Briceño</p>
+          <p style="margin-top: 10px;">PBX: (593) 2 393 8600</p>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">GUAYAQUIL:</div>
+          <p>Av. 9 de Octubre 200 entre<br>Pedro Carbo y Pichincha</p>
+          <p style="margin-top: 10px;">PBX: (593) 4 372 9470</p>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">CUENCA:</div>
+          <p>Calle Larga y<br>Av. Huayna Cápac</p>
+          <p style="margin-top: 10px;">PBX: (593) 7 283 1255</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
